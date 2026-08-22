@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date Picker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f2f5;
+        }
+
+        .date-picker-container {
+            width: 360px;
+        }
+
+        /* Input field */
+        .input-wrapper {
+            position: relative;
+            margin-bottom: 16px;
+        }
+
+        .date-input {
+            width: 100%;
+            padding: 12px 14px;
+            font-size: 16px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .date-input:focus {
+            border-color: #4a90d9;
+        }
+
+        /* Calendar grid */
+        .calendar-wrapper {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            padding: 20px;
+            display: none;
+        }
+
+        .calendar-wrapper.active {
+            display: block;
+        }
+
+        .month-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+        }
+
+        .month-block {
+            min-width: 0;
+        }
+
+        .month-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #333;
+            text-align: center;
+            margin-bottom: 8px;
+            padding: 4px 0;
+        }
+
+        .weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 2px;
+            margin-bottom: 4px;
+        }
+
+        .weekday {
+            font-size: 11px;
+            font-weight: 600;
+            color: #888;
+            text-align: center;
+            padding: 4px 0;
+        }
+
+        .days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 2px;
+        }
+
+        .day-cell {
+            font-size: 13px;
+            text-align: center;
+            padding: 8px 4px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.15s, color 0.15s;
+            user-select: none;
+        }
+
+        .day-cell:hover {
+            background-color: #e8f0fe;
+            color: #1a73e8;
+        }
+
+        .day-cell.today {
+            border: 2px solid #1a73e8;
+            font-weight: 700;
+            color: #1a73e8;
+        }
+
+        .day-cell.selected {
+            background-color: #1a73e8;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .day-cell.selected:hover {
+            background-color: #1558b0;
+            color: #fff;
+        }
+
+        .day-cell.empty {
+            cursor: default;
+        }
+
+        .day-cell.empty:hover {
+            background-color: transparent;
+            color: inherit;
+        }
+    </style>
+</head>
+<body>
+
+<div class="date-picker-container">
+    <div class="input-wrapper">
+        <input type="text" class="date-input" id="dateInput" placeholder="Select a date..." readonly>
+    </div>
+    <div class="calendar-wrapper active" id="calendarWrapper">
+        <div class="month-grid" id="monthGrid"></div>
+    </div>
+</div>
+
+<script>
+    const now = new Date();
+    const currentYear = now.getFullYear();
+    const currentMonth = now.getMonth(); // 0-indexed
+    const currentDay = now.getDate();
+
+    const monthNames = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+
+    const dayNames = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+
+    let selectedDate = null;
+
+    function getDaysInMonth(year, month) {
+        return new Date(year, month + 1, 0).getDate();
+    }
+
+    function getFirstDayOfMonth(year, month) {
+        return new Date(year, month, 1).getDay();
+    }
+
+    function buildCalendar(year, month) {
+        const daysInMonth = getDaysInMonth(year, month);
+        const firstDay = getFirstDayOfMonth(year, month);
+        const weeks = Math.ceil((daysInMonth + firstDay) / 7);
+        const totalCells = weeks * 7;
+
+        let html = `<div class="month-block">`;
+        html += `<div class="month-title">${monthNames[month]} ${year}</div>`;
+
+        // Weekday headers
+        html += `<div class="weekdays">`;
+        dayNames.forEach(d => {
+            html += `<div class="weekday">${d}</div>`;
+        });
+        html += `</div>`;
+
+        // Day cells
+        html += `<div class="days">`;
+        for (let i = 0; i < totalCells; i++) {
+            const dayNum = i - firstDay + 1;
+            if (dayNum < 1 || dayNum > daysInMonth) {
+                html += `<div class="day-cell empty"></div>`;
+            } else {
+                let cls = "day-cell";
+                // Today check
+                if (year === currentYear && month === currentMonth && dayNum === currentDay) {
+                    cls += " today";
+                }
+                // Selected check
+                if (selectedDate && selectedDate.year === year && selectedDate.month === month && selectedDate.day === dayNum) {
+                    cls += " selected";
+                }
+                html += `<div class="${cls}" data-year="${year}" data-month="${month}" data-day="${dayNum}">${dayNum}</div>`;
+            }
+        }
+        html += `</div></div>`;
+
+        return html;
+    }
+
+    function renderCalendars() {
+        const grid = document.getElementById('monthGrid');
+        let html = '';
+
+        for (let i = 0; i < 3; i++) {
+            let m = currentMonth + i;
+            let y = currentYear;
+            if (m > 11) {
+                m -= 12;
+                y += 1;
+            }
+            html += buildCalendar(y, m);
+        }
+
+        grid.innerHTML = html;
+    }
+
+    function formatDate(year, month, day) {
+        const m = String(month + 1).padStart(2, '0');
+        const d = String(day).padStart(2, '0');
+        return `${year}-${m}-${d}`;
+    }
+
+    function handleDayClick(e) {
+        const cell = e.target.closest('.day-cell');
+        if (!cell || cell.classList.contains('empty')) return;
+
+        const year = parseInt(cell.dataset.year);
+        const month = parseInt(cell.dataset.month);
+        const day = parseInt(cell.dataset.day);
+
+        selectedDate = { year, month, day };
+
+        document.getElementById('dateInput').value = formatDate(year, month, day);
+        renderCalendars();
+    }
+
+    // Initialize
+    document.getElementById('monthGrid').addEventListener('click', handleDayClick);
+    renderCalendars();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Scheduler POC</title>
+        <link rel="stylesheet" href="css/styles.css">
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="form">
+                <div>
+                    <h1>
+                        Scheduling Site
+                    </h1>
+                </div>
+                <div>
+                    <div class="form-data-field">
+                        <div class="instruction">
+                            1. Select Appointment with
+                        </div>
+                        <div class="data-text-input">
+                            <input name="appointment-with" type="text" value="Dr. Robert House" disabled/>
+                        </div>
+                    </div>
+                    <div class="form-data-field">
+                        <div class="instruction">
+                            2. Select Appointment for
+                        </div>
+                        <div class="data-text-input">
+                            <select name="appointment-for" id="appointment-for">
+                                <option value="Consultation">Consultation</option>
+                                <option value="Followup Checkup">Followup Checkup</option>
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="form-data-field">
+                        <div class="instruction">
+                            3. Select from Available Schedules (this month and the next 2 months only)
+                        </div>
+                        <div>
+                            <div class="schedule-picker">
+                                <div class="picked-schedule">
+                                    <div class="input-wrapper">
+                                        <input type="text" class="date-input" id="dateInput" placeholder="Select a date..." readonly>
+                                    </div>
+                                    <div class="input-wrapper">
+                                        <input type="text" class="time-slot-input" id="timeSlotInput" placeholder="Select a Time Slot..." readonly>
+                                    </div>
+                                </div>
+                                <div class="schedule-choices">
+                                    <div class="calendar-wrapper active" id="calendarWrapper">
+                                        <div class="month-grid" id="monthGrid"></div>
+                                    </div>
+                                    <div class="time-slot-wrapper" id="timeSlotWrapper">
+                                        <div class="time-slot-grid" id="timeSlotGrid"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-options">
+                        <button class="submit-button">SUBMIT</button>
+                    </div>
+                </div>
+                <div class="contact-info">
+                    <p>
+                        For inquiries, you call the following numbers: <br>
+                        Mobile: +63 000-000-0000 <br>
+                        Landline: +63 000-0000
+                    </p>
+                </div>
+            </div>
+        </div>
+         
+        <script src="js/script.js" defer></script>
+    </body>
+</html>

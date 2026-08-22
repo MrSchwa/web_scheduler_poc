@@ -1,0 +1,237 @@
+body {
+    padding: 0;
+    margin: 0;
+    background-color: white;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+    width: 100%;
+}
+
+.form {
+    background-color: lightcyan;
+    width: 50%;
+    min-width: 600px;
+    padding: 16px;
+    margin: auto;
+    margin-top: 16px;
+    border-radius: 12px;
+    box-shadow: 4px 4px 8px lightgrey;
+}
+
+.form h1 {
+    text-align: center
+}
+
+.form-data-field {
+    padding: 8px;
+    margin-bottom: 8px;
+}
+
+.form-data-field .instruction {
+    font-size: 16px;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.form-data-field .data-text-input input {
+    min-width: 420px;
+    padding: 12px 14px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+}
+
+.form-data-field .data-text-input select {
+    min-width: 420px;
+    padding: 12px 14px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+}
+
+.date-picker-container {
+            width: 360px;
+        }
+
+/* Input field */
+.input-wrapper {
+    position: relative;
+    margin-bottom: 16px;
+}
+
+.date-input {
+    padding: 12px 14px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.date-input:focus {
+    border-color: #4a90d9;
+}
+
+/* Scheduler*/
+.schedule-choices {
+    display:flex;
+    gap: 24px;
+}
+
+.picked-schedule {
+    display: flex;
+    gap: 12px;
+}
+
+/* Calendar grid */
+.calendar-wrapper {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    padding: 20px;
+    flex: 1;
+}
+
+.calendar-wrapper.active {
+    display: block;
+}
+
+.month-block {
+    min-width: 0;
+}
+
+.month-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #333;
+    text-align: center;
+    margin-bottom: 8px;
+    padding: 4px 0;
+    display: flex;
+}
+
+.month-title .month-display {
+    flex: 1;
+}
+
+.weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    margin-bottom: 4px;
+}
+
+.weekday {
+    font-size: 11px;
+    font-weight: 600;
+    color: #888;
+    text-align: center;
+    padding: 4px 0;
+}
+
+.days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+}
+
+.day-cell {
+    font-size: 13px;
+    text-align: center;
+    padding: 8px 4px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.15s, color 0.15s;
+    user-select: none;
+}
+
+.day-cell:hover {
+    background-color: #e8f0fe;
+    color: #1a73e8;
+}
+
+.day-cell.today {
+    border: 2px solid #1a73e8;
+    font-weight: 700;
+    color: #1a73e8;
+}
+
+.day-cell.selected {
+    background-color: #1a73e8;
+    color: #fff;
+    font-weight: 700;
+}
+
+.day-cell.selected:hover {
+    background-color: #1558b0;
+    color: #fff;
+}
+
+.day-cell.empty {
+    cursor: default;
+}
+
+.day-cell.empty:hover {
+    background-color: transparent;
+    color: inherit;
+}
+
+/* Time Slots*/
+.time-slot-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    padding: 20px;
+}
+
+.time-slot-option {
+    background-color: white;
+    border-radius: 8px;
+    padding: 8px;
+}
+
+.time-slot-option.selected {
+    background-color: #1a73e8;
+    color: white;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.time-slot-input {
+    padding: 12px 14px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.time-slot-input:focus {
+    border-color: #4a90d9;
+}
+
+/* Submit */
+
+.form-options {
+    text-align: center;
+    margin: 12px;
+}
+
+.submit-button {
+    text-decoration: none;
+    background-color: #1a73e8;
+    color: white;
+    padding: 12px 60px;
+    font-size: 20px;
+    font-weight: bold;
+    border: 2px solid transparent;
+    border-radius: 8px;
+}
+
+/* Info */
+
+.contact-info {
+    font-size: 12px;
+}
