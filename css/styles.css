@@ -187,16 +187,31 @@ body {
     padding: 20px;
 }
 
+.time-slots-heading {
+    font-weight: bold;
+    text-align: center;
+}
+
 .time-slot-option {
     background-color: white;
     border-radius: 8px;
     padding: 8px;
 }
 
+.time-slot-option:hover {
+    background-color: #e8f0fe;
+    color: #1a73e8;
+}
+
 .time-slot-option.selected {
     background-color: #1a73e8;
     color: white;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.time-slot-option.selected:hover {
+    background-color: #1558b0;
+    color: #fff;
 }
 
 .time-slot-input {

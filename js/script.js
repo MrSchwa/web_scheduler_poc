@@ -155,7 +155,9 @@ window.addEventListener('load', (event) => {
     ]
 
     function buildTimeSlot(selectedTimeSlot) {
-        let html = `<div class="time-slot-choices" id="timeSlotChoices">`;
+        let html = `<div>`;
+        html += `<div class="time-slots-heading">Time Slots</div>`;
+        html += `<div class="time-slot-choices" id="timeSlotChoices">`;
         let baseCls = `time-slot-option`;
         for (let i = 0; i < availableTimeSlots.length; i++) {
             let cls = baseCls;
@@ -165,7 +167,7 @@ window.addEventListener('load', (event) => {
             html += `<div class="${cls}" data-slot-name="${availableTimeSlots[i]}" >${availableTimeSlots[i]}</div>`
         }
 
-        html += `</div>`;
+        html += `</div></div>`;
         
         return html;
     }
