@@ -21,9 +21,14 @@
                             1. Select Appointment with
                         </div>
                         <div class="data-text-input">
-                            <input name="appointment-with" type="text" value="Dr. Robert House" disabled/>
+                            <select name="appointment-with" id="appointment-with">
+                                <option value="GP">GP</option>
+                                <option value="Fam Med">Fam Med</option>
+                                <option value="Pulmo">Pulmo</option>
+                            </select>
                         </div>
                     </div>
+
                     <div class="form-data-field">
                         <div class="instruction">
                             2. Select Appointment for
@@ -32,13 +37,39 @@
                             <select name="appointment-for" id="appointment-for">
                                 <option value="Consultation">Consultation</option>
                                 <option value="Followup Checkup">Followup Checkup</option>
+                                <option value="Followup Checkup">Medical Certificate</option>
                             </select>
 
                         </div>
                     </div>
+                    
                     <div class="form-data-field">
                         <div class="instruction">
-                            3. Select from Available Schedules (this month and the next 2 months only)
+                            3. Patient Name
+                        </div>
+                        <div class="data-text-input">
+                            <div class="data-text-input">
+                                <input name="patient-name" type="text"/>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-data-field">
+                        <div class="instruction">
+                            4. Patient Type
+                        </div>
+                        <div class="data-text-input">
+                            <select name="patient-type" id="patient-type">
+                                <option value="Regular">Regular</option>
+                                <option value="Senior">Senior</option>
+                                <option value="PWD">PWD</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-data-field">
+                        <div class="instruction">
+                            5. Select from Available Schedules (this month and the next 2 months only)
                         </div>
                         <div>
                             <div class="schedule-picker">
@@ -58,6 +89,18 @@
                                         <div class="time-slot-grid" id="timeSlotGrid"></div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="form-data-field">
+                        <div class="instruction">
+                            6. Remarks
+                        </div>
+                        <div class="data-text-input">
+                            <div class="data-text-input">
+                                <textarea id="remarks-field" name="remarks"></textarea>
                             </div>
                         </div>
                     </div>
