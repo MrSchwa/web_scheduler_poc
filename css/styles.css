@@ -199,6 +199,10 @@ textarea {
     color: #1a73e8;
 }
 
+.day-cell.has-available-sched {
+    background-color: lightgreen;
+}
+
 .day-cell.today {
     border: 2px solid #1a73e8;
     font-weight: 700;
@@ -234,6 +238,7 @@ textarea {
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     padding: 20px;
+    min-width: 150px;
 }
 
 .time-slots-heading {
@@ -245,6 +250,7 @@ textarea {
     background-color: white;
     border-radius: 8px;
     padding: 8px;
+    text-align: center;
 }
 
 .time-slot-option:hover {

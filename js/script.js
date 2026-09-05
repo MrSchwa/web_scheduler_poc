@@ -11,10 +11,27 @@ window.addEventListener('load', (event) => {
 
     const dayNames = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 
+    const availableSchedules = [
+        {
+            scheduleType: "regular",
+            days: [1, 3, 5],
+            timeSlots: [
+                "2:00 - 3:00 PM",
+                "3:00 - 4:00 PM",
+                "4:00 - 5:00 PM"
+            ]
+        }
+    ];
+    const daysWithAvailableScheds = [1, 3, 5];
+
+    // context vars
+
     let focusedMonth = currentMonth;
     let minAllowableMonth = currentMonth;
     let maxAllowableMonth = currentMonth + 2;
     let selectedDate = null;
+    let selectedDayIndex = null;
+    let selectedTimeSlot = null;
     
     function getDaysInMonth(year, month) {
         return new Date(year, month + 1, 0).getDate();
@@ -24,6 +41,36 @@ window.addEventListener('load', (event) => {
         return new Date(year, month, 1).getDay();
     }
     
+    function getDayId(year, month, dayNum) {
+        return `${year}-${(month+1).toString().padStart(2, '0')}-${dayNum.toString().padStart(2, '0')}`;
+    }
+
+    function doesDayHaveAnAvailableSchedule(dayId) {
+        var checkDate = new Date(`${dayId} 00:00:00`);
+        var dayNum = checkDate.getDay();
+
+        return daysWithAvailableScheds.includes(dayNum);
+    }
+
+    function buildDay(year, month, dayNum) {
+        let cls = "day-cell";
+        // Today check
+        if (year === currentYear && month === currentMonth && dayNum === currentDay) {
+            cls += " today";
+        }
+        const dayId = getDayId(year, month, dayNum);
+        // has schedule check
+        if(doesDayHaveAnAvailableSchedule(dayId)) {
+            cls += " has-available-sched";
+        }
+        // Selected check
+        if (selectedDate && selectedDate.year === year && selectedDate.month === month && selectedDate.day === dayNum) {
+            cls += " selected";
+        }
+
+        return `<div class="${cls}" data-day-id="${dayId}" data-year="${year}" data-month="${month}" data-day="${dayNum}">${dayNum}</div>`;
+    }
+
     function buildCalendar(year, month) {
         // Calendar Function
         const daysInMonth = getDaysInMonth(year, month);
@@ -53,16 +100,7 @@ window.addEventListener('load', (event) => {
             if (dayNum < 1 || dayNum > daysInMonth) {
                 html += `<div class="day-cell empty"></div>`;
             } else {
-                let cls = "day-cell";
-                // Today check
-                if (year === currentYear && month === currentMonth && dayNum === currentDay) {
-                    cls += " today";
-                }
-                // Selected check
-                if (selectedDate && selectedDate.year === year && selectedDate.month === month && selectedDate.day === dayNum) {
-                    cls += " selected";
-                }
-                html += `<div class="${cls}" data-year="${year}" data-month="${month}" data-day="${dayNum}">${dayNum}</div>`;
+                html += buildDay(year, month, dayNum);
             }
         }
         html += `</div></div>`;
@@ -103,9 +141,14 @@ window.addEventListener('load', (event) => {
         const day = parseInt(cell.dataset.day);
 
         selectedDate = { year, month, day };
+        selectedDayIndex = (new Date(`${getDayId(year, month, day)} 00:00:00`).getDay());
+        selectedTimeSlot = null;
+        document.getElementById('timeSlotInput').value = selectedTimeSlot;
+
 
         document.getElementById('dateInput').value = formatDate(year, month, day);
         renderCalendar(month);
+        renderTimeSlotChoices(selectedTimeSlot);
     }
 
     function handleGoToPreviousMonth() {
@@ -145,20 +188,26 @@ window.addEventListener('load', (event) => {
 
     // Time Slot Function
     
-    let selectedTimeSlot = null;
 
-    let availableTimeSlots = [
-        "2:00 - 3:00 PM",
-        "3:00 - 4:00 PM",
-        "4:00 - 5:00 PM",
-        "5:00 - 6:00 PM",
-    ]
+    function getTimeSlotsOfSelectedDate() {
+        const timeSlots = [];
+        for (var scheduleSet of availableSchedules) {
+            if (!scheduleSet.days.includes(selectedDayIndex)) {
+                continue;
+            }
+            for (var timeSlot of scheduleSet.timeSlots) {
+                if (!timeSlots.includes(timeSlot)) {
+                    timeSlots.push(timeSlot)
+                }
+            }
+        }
+        return timeSlots;
+    }
 
     function buildTimeSlot(selectedTimeSlot) {
-        let html = `<div>`;
-        html += `<div class="time-slots-heading">Time Slots</div>`;
-        html += `<div class="time-slot-choices" id="timeSlotChoices">`;
+        let html = `<div id="timeSlotChoices">`;
         let baseCls = `time-slot-option`;
+        let availableTimeSlots = getTimeSlotsOfSelectedDate();
         for (let i = 0; i < availableTimeSlots.length; i++) {
             let cls = baseCls;
             if (selectedTimeSlot === availableTimeSlots[i]) {
@@ -175,10 +224,11 @@ window.addEventListener('load', (event) => {
     function handleTimeSlotClick(e) {
         const slot = e.target.closest('.time-slot-option');
         if (!slot || slot.classList.contains('empty')) return;
-
+        
         selectedTimeSlot = slot.dataset.slotName;
 
         document.getElementById('timeSlotInput').value = selectedTimeSlot;
+        
         renderTimeSlotChoices(selectedTimeSlot);
     }
 
@@ -195,5 +245,4 @@ window.addEventListener('load', (event) => {
 
     // Initialize
     renderCalendar(focusedMonth);
-    renderTimeSlotChoices(selectedTimeSlot);
 });
