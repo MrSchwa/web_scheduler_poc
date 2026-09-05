@@ -208,15 +208,19 @@ window.addEventListener('load', (event) => {
         let html = `<div id="timeSlotChoices">`;
         let baseCls = `time-slot-option`;
         let availableTimeSlots = getTimeSlotsOfSelectedDate();
-        for (let i = 0; i < availableTimeSlots.length; i++) {
-            let cls = baseCls;
-            if (selectedTimeSlot === availableTimeSlots[i]) {
-                cls = cls + " selected";
+        if (availableTimeSlots.length > 0) {
+            for (let i = 0; i < availableTimeSlots.length; i++) {
+                let cls = baseCls;
+                if (selectedTimeSlot === availableTimeSlots[i]) {
+                    cls = cls + " selected";
+                }
+                html += `<div class="${cls}" data-slot-name="${availableTimeSlots[i]}" >${availableTimeSlots[i]}</div>`;
             }
-            html += `<div class="${cls}" data-slot-name="${availableTimeSlots[i]}" >${availableTimeSlots[i]}</div>`
+        } else {
+            html += `<p>No available schedule.</p>`;
         }
 
-        html += `</div></div>`;
+        html += `</div>`;
         
         return html;
     }
