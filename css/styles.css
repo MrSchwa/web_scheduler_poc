@@ -1,31 +1,72 @@
+/* google fonts */
+
+.pt-sans-regular {
+  font-family: "PT Sans", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.pt-sans-bold {
+  font-family: "PT Sans", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.pt-sans-regular-italic {
+  font-family: "PT Sans", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.pt-sans-bold-italic {
+  font-family: "PT Sans", sans-serif;
+  font-weight: 700;
+  font-style: italic;
+}
+
+
+/* general */
+
 body {
     padding: 0;
     margin: 0;
-    background-color: white;
-    font-family: Arial, Helvetica, sans-serif;
+    background-image: linear-gradient(to bottom, lightblue, lightcyan);
+    font-family: "PT Sans", sans-serif;
+    font-style: normal;
+}
+
+select {
+    font-family: "PT Sans", sans-serif;
+    font-style: normal;
+}
+
+input {
+    font-family: "PT Sans", sans-serif;
+    font-style: normal;
 }
 
 textarea {
     width: 50%;
     min-height: 120px;
     font-size: 16px;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "PT Sans", sans-serif;
+    font-style: normal;
 }
 
+/* classes */
 
 .container {
     width: 100%;
 }
 
 .form {
-    background-color: lightcyan;
+    background-color: white;
     width: 50%;
     min-width: 600px;
     padding: 16px;
-    margin: auto;
-    margin-top: 16px;
+    margin: 20px auto;
     border-radius: 12px;
-    box-shadow: 4px 4px 8px lightgrey;
+    box-shadow: 4px 4px 8px grey;
 }
 
 .form h1 {
